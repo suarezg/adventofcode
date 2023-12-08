@@ -40,20 +40,20 @@ with open('input.txt') as file:
 
             # seed interval is left or right of source interval, no overlap
             if s.end < src or s.start > src_end:
-                print(f"No overlap")
+                # print(f"No overlap")
                 new_seeds.append(s)
                 continue
 
             # seed interval is is enclosed by src interval
             if s.start >= src and s.end <= src_end:
-                print(f"enclosed")
+                # print(f"enclosed")
                 new_start = dest + s.start - src
                 new_end = new_start + s.end - s.start
                 new_seeds.append(Seed(new_start, new_end, True))
                 continue
 
             if s.start < src and s.end > src_end:
-                print(f"mid cut")
+                # print(f"mid cut")
                 interval_additions += 2
                 new_seeds.append(Seed(dest + src - s.start, dest + src + (src_end - src) , True)) 
                 new_seeds.append(Seed(s.start, src - 1, False)) # left interval
@@ -62,14 +62,14 @@ with open('input.txt') as file:
                 
 
             if s.start < src:
-                print(f"left cut")
+                # print(f"left cut")
                 interval_additions += 1
                 new_seeds.append(Seed(dest, dest + s.end - src, True)) # right interval
                 new_seeds.append(Seed(s.start, src - 1, False)) # left interval
                 continue
 
            
-            print(f"right cut")
+            # print(f"right cut")
             interval_additions += 1
             new_seeds.append(Seed(dest + s.start - src, dest + s.start - src + (src_end - s.start), True)) # left interval
             new_seeds.append(Seed(src_end + 1, s.end, False)) # right interval
